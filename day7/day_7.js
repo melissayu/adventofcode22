@@ -29,12 +29,9 @@ void (async () => {
       currentDirSize = 0;
     }
 
-    //$ cd .. => currentDirPath = containingDirPath (slice currentDirName off the path)
+    //$ cd ..
     if (consoleLine == "$ cd ..") {
-      currentDirPath = currentDirPath.slice(
-        0,
-        -fileSystem[currentDirPath].dirName.length
-      );
+      currentDirPath = getParentDirPath(currentDirPath, fileSystem);
       continue;
     }
 
@@ -62,6 +59,7 @@ void (async () => {
     currentDirSize += fileSize;
   }
 
+  //take care of the final dir
   if (currentDirSize) {
     updateDirSizes(currentDirPath, currentDirSize, fileSystem);
   }
